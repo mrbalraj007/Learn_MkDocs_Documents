@@ -26,4 +26,10 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: pip install mkdocs-material 
-      - run: mkdocs gh-deploy --force
+      #- run: mkdocs gh-deploy --force
+      
+      - name: Create CNAME file for Hashnode subdomain
+        run: echo "balrajsingh.hashnode.dev" > docs/CNAME
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force --cname balrajsingh.hashnode.dev
