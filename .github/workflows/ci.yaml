@@ -22,7 +22,7 @@ jobs:
         id: publish_hashnode
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./post/blog/AboutThis Project.md"
+          file: "./post/blog/AboutThisProject.md"
           host: "balrajsingh-dev.hashnode.dev"
 
         # To get additional detail logs about the workflow
