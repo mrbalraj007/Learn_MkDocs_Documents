@@ -4,7 +4,7 @@ import json
 import sys
 import frontmatter  # For extracting frontmatter
 
-HASHNODE_API_URL = "https://api.hashnode.com/"
+HASHNODE_API_URL = "https://gql.hashnode.com" #"https://api.hashnode.com/"
 HASHNODE_API_TOKEN = os.environ.get("HASHNODE_API_TOKEN")
 HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID")
 MKDOCS_SITE_DIR = "site"
