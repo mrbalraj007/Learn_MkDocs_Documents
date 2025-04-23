@@ -38,11 +38,11 @@ jobs:
         run: pip install mkdocs-material
 
       - name: Create CNAME file for Hashnode subdomain
-        run: echo "balrajsingh.hashnode.dev" > docs/CNAME
+        run: echo "balrajsingh-dev.hashnode.dev" > docs/CNAME
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
-        
+
       - name: Publish to Hashnode
         env:
           HASHNODE_API_TOKEN: ${{ secrets.HASHNODE_API_TOKEN }}  # Add this secret in GitHub repo settings
