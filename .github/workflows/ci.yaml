@@ -17,7 +17,7 @@ jobs:
         uses: raunakgurud09/hashnode-publish@v2
         with:
           host: "balrajsingh-dev.hashnode.dev"
-          file: "docs/AboutThis Project.md"
+          file: "post/blog/AboutThis Project.md"
           hashnode_key: ${{ secrets.HASHNODE_KEY }} 
       - name: Get get output
         run: echo "${{steps.publish_hashnode.outputs.result_json}} length ${{steps.publish_hashnode.outputs.result_summary}}"
