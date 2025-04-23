@@ -4,7 +4,7 @@ import json
 
 HASHNODE_API_TOKEN = os.environ.get("HASHNODE_API_TOKEN")
 # HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID") # You won't need this for the test query
-HASHNODE_API_URL = "https://api.hashnode.com/graphql"
+HASHNODE_API_URL = "https://gql.hashnode.com" #"https://api.hashnode.com/graphql"
 
 # --- Temporarily comment out or remove these ---
 # def publish_article(title, content):
