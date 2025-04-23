@@ -11,13 +11,21 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Publish articles on hashnode
-        id: publish_hashnode
+      # This step is required as we need to get file details
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+       # The action which publish the blog
+      - name: Publish to Hashnode
+        # note: using @v2 (current latest version)
         uses: raunakgurud09/hashnode-publish@v2
+        id: publish_hashnode
         with:
+          hashnode_key: ${{ secrets.HASHNODE_KEY }}
+          file: "./post/blog/AboutThis Project.md"
           host: "balrajsingh-dev.hashnode.dev"
-          file: "post/blog/AboutThis Project.md"
-          hashnode_key: ${{ secrets.HASHNODE_KEY }} 
+
+        # To get additional detail logs about the workflow
       - name: Get get output
-        run: echo "${{steps.publish_hashnode.outputs.result_json}} length ${{steps.publish_hashnode.outputs.result_summary}}"
+        run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+
