@@ -3,74 +3,52 @@ import requests
 import json
 
 HASHNODE_API_TOKEN = os.environ.get("HASHNODE_API_TOKEN")
-HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID")
+# HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID") # You won't need this for the test query
 HASHNODE_API_URL = "https://api.hashnode.com"
 
-def publish_article(title, content):
-    print(f"Attempting to publish: '{title[:50]}...'")
-    query = """
-    mutation CreateStory($input: CreateStoryInput!) {
-      createPublicationStory(input: $input, publicationId: "%s") {
-        post {
-          slug
-          url
-        }
-      }
-    }
-    """ % HASHNODE_BLOG_ID
+# --- Temporarily comment out or remove these ---
+# def publish_article(title, content):
+#     # ... your original publish_article code ...
+#     pass
 
-    payload = {
-        "query": query,
-        "variables": {
-            "input": {
-                "title": title,
-                "contentMarkdown": content,
-                "slug": title.lower().replace(" ", "-"), # Basic slug generation
-                "tags": [] # Add relevant tags here
-                # Add other relevant fields as per Hashnode API
-            }
-        }
-    }
+# def process_markdown_file(filepath):
+#     # ... your original process_markdown_file code ...
+#     pass
+# --- End of temporary commenting/removal ---
 
-    headers = {
-        "Authorization": HASHNODE_API_TOKEN,
-        "Content-Type": "application/json"
-    }
+# --- Test Query ---
+query_test = """
+query {
+  publication(host: "%s") {
+    id
+    title
+  }
+}
+""" % "balrajsingh-dev.hashnode.dev"  # Replace with your actual subdomain
 
-    try:
-        response = requests.post(HASHNODE_API_URL, headers=headers, data=json.dumps(payload))
-        response.raise_for_status()  # Raise an exception for bad status codes
-        data = response.json()
+payload_test = {"query": query_test}
 
-        if data.get("data") and data["data"].get("createPublicationStory") and data["data"]["createPublicationStory"].get("post"):
-            slug = data["data"]["createPublicationStory"]["post"]["slug"]
-            url = data["data"]["createPublicationStory"]["post"]["url"]
-            print(f"Successfully published '{title}' to: {url}")
-        elif data.get("errors"):
-            print(f"Error publishing '{title}': {data['errors']}")
-        else:
-            print(f"Unexpected response publishing '{title}': {data}")
+headers = {
+    "Authorization": HASHNODE_API_TOKEN,
+    "Content-Type": "application/json"
+}
 
-    except requests.exceptions.RequestException as e:
-        print(f"Network error publishing '{title}': {e}")
-    except json.JSONDecodeError:
-        print(f"Error decoding JSON response for '{title}'. Response text: {response.text}")
+try:
+    response_test = requests.post(HASHNODE_API_URL, headers=headers, data=json.dumps(payload_test))
+    response_test.raise_for_status()
+    data_test = response_test.json()
+    print("Test Query Response:", data_test)
+except requests.exceptions.RequestException as e:
+    print("Test Query Error:", e)
+except json.JSONDecodeError:
+    print("Test Query JSON Decode Error:", response_test.text)
 
-def process_markdown_file(filepath):
-    with open(filepath, 'r') as f:
-        content = f.read()
-        # You'll need more robust logic to extract the title
-        # Consider using regular expressions or a Markdown parsing library
-        lines = content.splitlines()
-        title_line = next((line for line in lines if line.startswith('# ')), None)
-        title = title_line[2:].strip() if title_line else filepath.split('/')[-1].replace('.md', '').replace('-', ' ').title()
-        publish_article(title, content)
-
-if __name__ == "__main__":
-    docs_directory = "docs"
-    for filename in os.listdir(docs_directory):
-        if filename.endswith(".md"):
-            filepath = os.path.join(docs_directory, filename)
-            process_markdown_file(filepath)
-
-    print("Finished attempting to publish articles.")
+# --- If you want to keep the original functions, you can leave this at the end ---
+# if __name__ == "__main__":
+#     docs_directory = "docs"
+#     for filename in os.listdir(docs_directory):
+#         if filename.endswith(".md"):
+#             filepath = os.path.join(docs_directory, filename)
+#             process_markdown_file(filepath)
+#
+#     print("Finished attempting to publish articles.")
