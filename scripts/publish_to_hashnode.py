@@ -2,28 +2,17 @@ import os
 import requests
 import json
 import sys
+import frontmatter  # For extracting frontmatter
 
-HASHNODE_API_URL = "https://api.hashnode.com/"  # Make sure this is the *correct* base URL
+HASHNODE_API_URL = "https://api.hashnode.com/"
 HASHNODE_API_TOKEN = os.environ.get("HASHNODE_API_TOKEN")
 HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID")
-MKDOCS_SITE_DIR = "docs"  # Default MkDocs output directory
+MKDOCS_SITE_DIR = "site"
+DOCS_SOURCE_DIR = "docs"  # Define the source directory for Markdown files
 
 if not HASHNODE_API_TOKEN or not HASHNODE_BLOG_ID:
     print("Error: HASHNODE_API_TOKEN and HASHNODE_BLOG_ID environment variables must be set.")
     sys.exit(1)
-
-def extract_frontmatter(markdown_content):
-    """Extracts frontmatter (if any) from the Markdown content."""
-    lines = markdown_content.splitlines()
-    if len(lines) >= 3 and lines[0] == "---" and lines[2] == "---":
-        frontmatter_str = "\n".join(lines[1:2])
-        try:
-            frontmatter = json.loads(frontmatter_str)
-            content = "\n".join(lines[3:])
-            return frontmatter, content
-        except json.JSONDecodeError:
-            return {}, markdown_content
-    return {}, markdown_content
 
 def publish_to_hashnode(title, content_markdown, slug, tags=None, cover_image_url=None):
     """Publishes a story to Hashnode."""
@@ -62,7 +51,7 @@ def publish_to_hashnode(title, content_markdown, slug, tags=None, cover_image_ur
 
     try:
         response = requests.post(HASHNODE_API_URL, json=payload, headers=headers)
-        response.raise_for_status()  # Raise an exception for HTTP errors
+        response.raise_for_status()
 
         data = response.json()
         if data.get("errors"):
@@ -79,24 +68,21 @@ def publish_to_hashnode(title, content_markdown, slug, tags=None, cover_image_ur
         print("Error decoding Hashnode API response.")
 
 def process_markdown_file(filepath):
-    """Processes a single Markdown file and publishes it to Hashnode."""
+    """Processes a single Markdown file and publishes it to Hashnode using frontmatter."""
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
-            markdown_content = f.read()
+            post = frontmatter.load(f)
 
-        # You might need more sophisticated logic to extract title, slug, tags, etc.
-        # This is a basic example assuming the filename can be used as a base for the slug
-        filename = os.path.splitext(os.path.basename(filepath))[0]
-        title = filename.replace('-', ' ').title()
-        slug = filename.lower()
+        title = post.get('title')
+        slug = post.get('slug')
+        tags = post.get('tags') if post.get('tags') else []
+        cover_image_url = post.get('cover_image')
 
-        # Basic tag extraction (you might want to improve this)
-        # For example, look for a specific section or frontmatter
-        tags = [tag.strip() for tag in title.lower().split()[:3]] # Basic: first 3 words of title as tags
+        if not title or not slug:
+            print(f"Warning: Missing 'title' or 'slug' in frontmatter of '{filepath}'. Skipping.")
+            return
 
-        # You might want to add logic to extract a cover image URL if present in your Markdown
-
-        publish_to_hashnode(title, markdown_content, slug, tags=tags)
+        publish_to_hashnode(title, post.content, slug, tags=tags, cover_image_url=cover_image_url)
 
     except FileNotFoundError:
         print(f"Error: File not found: {filepath}")
@@ -104,21 +90,19 @@ def process_markdown_file(filepath):
         print(f"Error processing {filepath}: {e}")
 
 if __name__ == "__main__":
-    site_path = os.path.join(os.getcwd(), MKDOCS_SITE_DIR)
+    docs_path = os.path.join(os.getcwd(), DOCS_SOURCE_DIR)
     markdown_files = []
 
-    for root, _, files in os.walk(site_path):
+    for root, _, files in os.walk(docs_path):
         for file in files:
             if file.endswith(".md"):
                 filepath = os.path.join(root, file)
-                # Ensure we are only processing source Markdown files, not the HTML output
-                if MKDOCS_SITE_DIR not in filepath:
-                    markdown_files.append(filepath)
+                markdown_files.append(filepath)
 
     if not markdown_files:
-        print(f"No Markdown files found outside the '{MKDOCS_SITE_DIR}' directory to publish.")
+        print(f"No Markdown files found in the '{DOCS_SOURCE_DIR}' directory to publish.")
     else:
-        print(f"Found {len(markdown_files)} Markdown files to publish...")
+        print(f"Found {len(markdown_files)} Markdown files in '{DOCS_SOURCE_DIR}' to publish...")
         for md_file in markdown_files:
             print(f"Processing: {md_file}")
             process_markdown_file(md_file)
