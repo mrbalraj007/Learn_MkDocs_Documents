@@ -10,7 +10,7 @@ publish: true
 description: This is a demo blog with minimum content 
 
 # Recommended! - Provide the relative imageUrl
-cover_image: ./assets/blog-post-2.jpg
+cover_image: ./assets/logo.png
 
 # Required! - Keywords or hashtags related to your blog
 tags:
