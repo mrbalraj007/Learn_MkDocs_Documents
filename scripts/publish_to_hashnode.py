@@ -1,37 +1,76 @@
 import os
 import requests
+import json
 
 HASHNODE_API_TOKEN = os.environ.get("HASHNODE_API_TOKEN")
 HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID")
+HASHNODE_API_URL = "https://api.hashnode.com"
 
-if not HASHNODE_API_TOKEN or not HASHNODE_BLOG_ID:
-    print("Error: HASHNODE_API_TOKEN or HASHNODE_BLOG_ID not set.")
-    exit(1)
-
-# In a real script, you would:
-# 1. Read your Markdown files from the 'docs' directory (or wherever your MkDocs content is).
-# 2. Iterate through the files.
-# 3. For each file, extract the title and content.
-# 4. Use the Hashnode API to create a new post.
-
-# Example of a placeholder for API interaction (replace with actual API calls)
 def publish_article(title, content):
-    print(f"Publishing article: '{title}' with content: '{content[:50]}...'")
-    # Add your Hashnode API call here
+    print(f"Attempting to publish: '{title[:50]}...'")
+    query = """
+    mutation CreateStory($input: CreateStoryInput!) {
+      createPublicationStory(input: $input, publicationId: "%s") {
+        post {
+          slug
+          url
+        }
+      }
+    }
+    """ % HASHNODE_BLOG_ID
 
-# Example of how you might process a Markdown file (this is a very basic example)
+    payload = {
+        "query": query,
+        "variables": {
+            "input": {
+                "title": title,
+                "contentMarkdown": content,
+                "slug": title.lower().replace(" ", "-"), # Basic slug generation
+                "tags": [] # Add relevant tags here
+                # Add other relevant fields as per Hashnode API
+            }
+        }
+    }
+
+    headers = {
+        "Authorization": HASHNODE_API_TOKEN,
+        "Content-Type": "application/json"
+    }
+
+    try:
+        response = requests.post(HASHNODE_API_URL, headers=headers, data=json.dumps(payload))
+        response.raise_for_status()  # Raise an exception for bad status codes
+        data = response.json()
+
+        if data.get("data") and data["data"].get("createPublicationStory") and data["data"]["createPublicationStory"].get("post"):
+            slug = data["data"]["createPublicationStory"]["post"]["slug"]
+            url = data["data"]["createPublicationStory"]["post"]["url"]
+            print(f"Successfully published '{title}' to: {url}")
+        elif data.get("errors"):
+            print(f"Error publishing '{title}': {data['errors']}")
+        else:
+            print(f"Unexpected response publishing '{title}': {data}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Network error publishing '{title}': {e}")
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON response for '{title}'. Response text: {response.text}")
+
 def process_markdown_file(filepath):
     with open(filepath, 'r') as f:
         content = f.read()
-        # You'll need more sophisticated logic to extract the title
-        title = filepath.split('/')[-1].replace('.md', '').replace('-', ' ').title()
+        # You'll need more robust logic to extract the title
+        # Consider using regular expressions or a Markdown parsing library
+        lines = content.splitlines()
+        title_line = next((line for line in lines if line.startswith('# ')), None)
+        title = title_line[2:].strip() if title_line else filepath.split('/')[-1].replace('.md', '').replace('-', ' ').title()
         publish_article(title, content)
 
 if __name__ == "__main__":
-    docs_directory = "docs"  # Assuming your Markdown files are in the 'docs' directory
+    docs_directory = "docs"
     for filename in os.listdir(docs_directory):
         if filename.endswith(".md"):
             filepath = os.path.join(docs_directory, filename)
             process_markdown_file(filepath)
 
-    print("Finished (placeholder - no actual API calls made).")
+    print("Finished attempting to publish articles.")
