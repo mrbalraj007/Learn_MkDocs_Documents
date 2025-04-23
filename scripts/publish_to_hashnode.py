@@ -6,7 +6,7 @@ import sys
 HASHNODE_API_URL = "https://api.hashnode.com/"  # Make sure this is the *correct* base URL
 HASHNODE_API_TOKEN = os.environ.get("HASHNODE_API_TOKEN")
 HASHNODE_BLOG_ID = os.environ.get("HASHNODE_BLOG_ID")
-MKDOCS_SITE_DIR = "site"  # Default MkDocs output directory
+MKDOCS_SITE_DIR = "docs"  # Default MkDocs output directory
 
 if not HASHNODE_API_TOKEN or not HASHNODE_BLOG_ID:
     print("Error: HASHNODE_API_TOKEN and HASHNODE_BLOG_ID environment variables must be set.")
