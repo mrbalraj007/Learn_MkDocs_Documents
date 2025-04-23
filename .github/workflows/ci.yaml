@@ -1,53 +1,23 @@
-name: ci
+name: "Publish"
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - main
-      - master
-
-permissions:
-  contents: write
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-
-      - uses: actions/setup-python@v5
+      - name: Publish articles on hashnode
+        id: publish_hashnode
+        uses: ./
         with:
-          python-version: 3.x
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install mkdocs-material
-          pip install python-frontmatter  # Install python-frontmatter here
-
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-
-      - name: Create CNAME file for Hashnode subdomain
-        run: echo "balrajsingh-dev.hashnode.dev" > docs/CNAME
-
-      - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
-
-      - name: Publish to Hashnode
-        env:
-          HASHNODE_API_TOKEN: ${{ secrets.HASHNODE_API_TOKEN }}  # Add this secret in GitHub repo settings
-          HASHNODE_BLOG_ID: ${{ secrets.HASHNODE_BLOG_ID }}  # Replace with your actual Hashnode blog ID
-        run: python scripts/publish_to_hashnode.py  # Ensure this script exists and handles upload to Hashnode
+          host: "balrajsingh-dev.hashnode.dev"
+          file: "docs/AboutThis Project.md"
+          hashnode_key: ${{ secrets.HASHNODE_API_TOKEN }} 
+      - name: Get get output
+        run: echo "${{steps.publish_hashnode.outputs.result_json}} length ${{steps.publish_hashnode.outputs.result_summary}}"
