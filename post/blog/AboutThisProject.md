@@ -2,7 +2,7 @@
 title: Demo- TESTING DOCUMENT USING GITHUB PAGES
 publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
-cover_image: ./assets/logo.png
+cover_image: ./assets/Screenshot_404.png
 tags:
   - example
   - article
@@ -70,7 +70,6 @@ Before diving into this project, here are some skills and tools you should be fa
 - **Set up your GitHub token**:
    - Create a new GitHub personal access token with the `repo` scope at https://github.com/settings/tokens. 
    - Then set it as an environment variable (DO NOT commit your token to version control):
-      
       ```bash
       # For Linux/macOS
       export GITHUB_TOKEN=your_github_token
