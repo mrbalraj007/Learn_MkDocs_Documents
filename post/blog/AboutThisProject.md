@@ -7,8 +7,8 @@ tags:
   - example
   - article
   - blog
-originalArticleURL: "https://example.com/blog/example-title-blog"
-subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
+# originalArticleURL: "https://example.com/blog/example-title-blog"
+# subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
