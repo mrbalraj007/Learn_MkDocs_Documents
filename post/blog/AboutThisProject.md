@@ -129,7 +129,7 @@ In the first approach, managing and rotating keys is cumbersome and prone to err
 - Add these keys as repository secrets in GitHub.
 - Configure a GitHub Actions workflow to use these secrets for AWS operations.
 
-    > ⚠️ **Important:** &rArr;<span style="color: Green;"> Here is the [Updated YAML]() file formanually approach.
+    > ⚠️ **Important:** &rArr;<span style="color: Green;"> Here is the [Updated YAML](https://github.com/mrbalraj007/GitHub-Action-OIDCConnect/blob/main/.github/workflows/AWSConnectionWithManual.yml) file formanually approach.
 
 --- 
 🚀 **I'll be demonstrating the second approach to setting up OIDC.** 🚀
@@ -147,18 +147,16 @@ In the first approach, managing and rotating keys is cumbersome and prone to err
     oidc-setup.tf  provider.tf  terraform.tfstate  terraform.tfstate.backup  terraform.tfvars  variables.tf  web_identity_roles.tf  
     ```
 
-You need to run ```main.tf``` file using following terraform command.
+You need to run terraform using the following command:
 
-Now, run the following command.
-
-    ```bash
-    terraform init
-    terraform fmt
-    terraform validate
-    terraform plan
-    terraform apply 
-    # Optional <terraform apply --auto-approve>
-    ```
+```bash
+terraform init
+terraform fmt
+terraform validate
+terraform plan
+terraform apply 
+# Optional <terraform apply --auto-approve>
+```
 -------
 ![alt text](All_ScreenShot/image.png)
 
@@ -176,7 +174,7 @@ Once you run the terraform command, then we will verify the following things to 
 ![alt text](All_ScreenShot/image-5.png)
 
 - Ensure the workflow file includes the required permissions block for OIDC.
-- Here is the 🗎 [Updated YAML]()file for OIDC.
+- Here is the 🗎 [Updated YAML](https://github.com/mrbalraj007/GitHub-Action-OIDCConnect/blob/main/.github/workflows/AWSConnectionWithOIDC.yml)file for OIDC.
 
 **Testing**
 
@@ -189,7 +187,7 @@ Once you run the terraform command, then we will verify the following things to 
 
 ## <span style="color: Yellow;"> Environment Cleanup:
 
-### <span style="color: cyan;"> To delete ```OIDC, Roles and Permissions```
+### <span style="color: cyan;"> To delete `OIDC, Roles and Permissions`
    -   Go to directory `GitHub-Action-OIDCConnect/Terraform_Code_Infra_setupand` and run the following command to delete the cluster.
        ```sh
          terraform destroy --auto-approve

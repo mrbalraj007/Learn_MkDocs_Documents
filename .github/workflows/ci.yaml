@@ -18,7 +18,16 @@ jobs:
       #   run: |
       #     git config user.name github-actions[bot]
       #     git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-       # The action which publish the blog
+      
+      # Debug step to validate markdown file
+      - name: Validate markdown file
+        run: |
+          echo "Checking if file exists:"
+          ls -la ./post/blog/AboutThisProject.md
+          echo "Checking front matter format:"
+          head -n 20 ./post/blog/AboutThisProject.md
+       
+      # The action which publish the blog
       - name: Publish to Hashnode
         # note: using @v2 (current latest version)
         uses: raunakgurud09/hashnode-publish@v2
@@ -28,7 +37,8 @@ jobs:
           file: "./post/blog/AboutThisProject.md"
           host: "balrajsingh.hashnode.dev"
 
-        # To get additional detail logs about the workflow
+      # To get additional detail logs about the workflow
       - name: Get get output
         run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+        if: always()
 
