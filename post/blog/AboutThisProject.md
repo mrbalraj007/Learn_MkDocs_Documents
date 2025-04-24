@@ -1,8 +1,8 @@
 ---
-title: Demo- TESTING DOCUMENT USING GITHUB PAGES
+title: My New Project on K8 Document and Terraform
 publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
-cover_image: ./assets/Screenshot_404.png
+cover_image: ./assets/mainproject.png
 tags:
   - example
   - article
