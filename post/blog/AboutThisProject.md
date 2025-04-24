@@ -1,20 +1,16 @@
 ---
-title: "Streamlining AWS Integration with GitHub Actions: A Secure and Scalable Approach Using `OpenID Connect`"
+title: "Secure AWS and GitHub Actions Integration with OIDC"
 publish: true
 description: New project for OIDC 
-cover_image: ./assets/image-10.png
+cover_image: https://raw.githubusercontent.com/mrbalraj007/Learn_MkDocs_Documents/main/post/blog/All_ScreenShot/image-10.png
 tags:
   - OIDC
   - GitHub Actions with AWS
   - GitHub Actions
-  - OIDC Integration with GitHub Actions
-  - Integration
-  - Keys
-  - Open Connect
-  - Identity provider.
-  - Terraform AWS
-  # originalArticleURL: "https://example.com/blog/example-title-blog"
-# subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
+  - OIDC Integration
+  - AWS Integration
+  - Security
+  - DevOps
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
@@ -32,7 +28,7 @@ This repository share some best practices on GitHub Actions for AWS CICD tasks.
 
 # Streamlining AWS Integration with GitHub Actions: A Secure and Scalable Approach Using `OpenID Connect`
 
-![alt text](All_ScreenShot/image-10.png)
+![alt text](https://raw.githubusercontent.com/mrbalraj007/Learn_MkDocs_Documents/main/post/blog/All_ScreenShot/image-10.png)
 
 ## <span style="color: Yellow;"> Objective
 The project demonstrates how to integrate GitHub Actions with AWS to automate workflows, such as uploading Docker images to AWS Elastic Container Registry (ECR). 
