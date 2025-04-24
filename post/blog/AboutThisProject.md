@@ -52,19 +52,19 @@ dar--l          21/04/25  12:34 PM                03.Code_IAC_Terraform_box
 -a---l          20/08/24   1:45 PM            493 .gitignore                                                                                                                                                                                                                                                                                                                                    
 -a---l          21/04/25   1:59 PM          18225 AboutThis Project.md                                                                                                                                                                              
 -a---l          19/04/25   8:48 PM           1309 main.tf                                                                                  
-````
+```
 
 - [Clone repository for terraform code](https://github.com/mrbalraj007/Learning_GitHub_Action/tree/main/01.Github_Action_DevOps-Project/Terraform_Code_Infra_setup)<br>
-> 💡 **Note:** Replace GitHub Token, resource names and variables as per your requirement in terraform code
-> - For **`github Repo`** Token value to be updated in file 
-    - `00.Code_IAC-github-repo/variables.tf` (i.e default- ```xxxxxx```*)
-> - **For EC2 VM** 
-      - `01.Code_IAC_Selfhosted-Runner-and-Trivy/main.tf` (i.e keyname- ```MYLABKEY```*)
-      - `03.Code_IAC_Terraform_box/main.tf` (i.e keyname- ```MYLABKEY```*)
-> - For **Cluster name** 
-      - `03.Code_IAC_Terraform_box/k8s_setup_file/main.tf` (i.e ```balraj```*).
-> - For **Node Pod**
-      - `03.Code_IAC_Terraform_box/k8s_setup_file/variable.tf` (i.e ```MYLABKEY```*)
+   > 💡 **Note:** Replace GitHub Token, resource names and variables as per your requirement in terraform code
+   > - For **`github Repo`** Token value to be updated in file 
+      - `00.Code_IAC-github-repo/variables.tf` (i.e default- ```xxxxxx```*)
+   > - **For EC2 VM** 
+         - `01.Code_IAC_Selfhosted-Runner-and-Trivy/main.tf` (i.e keyname- ```MYLABKEY```*)
+         - `03.Code_IAC_Terraform_box/main.tf` (i.e keyname- ```MYLABKEY```*)
+   > - For **Cluster name** 
+         - `03.Code_IAC_Terraform_box/k8s_setup_file/main.tf` (i.e ```balraj```*).
+   > - For **Node Pod**
+         - `03.Code_IAC_Terraform_box/k8s_setup_file/variable.tf` (i.e ```MYLABKEY```*)
   
       
 - **Set up your GitHub token**:
