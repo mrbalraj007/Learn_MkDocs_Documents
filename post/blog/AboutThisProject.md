@@ -1,5 +1,5 @@
 ---
-# title: TESTING DOCUMENT USING GITHUB PAGES
+title: TESTING DOCUMENT USING GITHUB PAGES
 publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
 cover_image: ./assets/logo.png
@@ -12,8 +12,8 @@ tags:
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
-# TESTING DOCUMENT USING GITHUB PAGES ...~!!!
 <!-- 
+# TESTING DOCUMENT USING GITHUB PAGES ...~!!!
 - Kubernetes Made Easy: Terraform-Powered EKS Provisioning with GitHub Actions CI/CD
 - Technical Project project: GitHub Actions CI/CD Pipeline with Live Project
 # https://github.com/user-attachments/assets/b93fa528-6778-4c97-94ee-6e36c7f4fa8e
