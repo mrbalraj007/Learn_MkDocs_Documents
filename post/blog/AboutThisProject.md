@@ -1,5 +1,5 @@
 ---
-title: TESTING DOCUMENT USING GITHUB PAGES
+title: Demo- TESTING DOCUMENT USING GITHUB PAGES
 publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
 cover_image: ./assets/logo.png
@@ -8,7 +8,7 @@ tags:
   - article
   - blog
 originalArticleURL: "https://example.com/blog/example-title-blog"
-# subtitle: A simple test article.
+subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
