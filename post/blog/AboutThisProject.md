@@ -32,65 +32,65 @@ Before diving into this project, here are some skills and tools you should be fa
 - A GitHub account.
 - A GitHub personal access token with the necessary permissions to create repositories.
 
-> ⚠️ **Important:** 
+   > ⚠️ **Important:** 
 
-> 01. Make sure First you will create a **`.pem`** key manually from the AWS console. i.e "MYLABKEY.pem" because it will be used for creating `EC2` VMs and `EKS cluster`.
-> 02. Copy `MYLABKEY.pem` in the terraform directory (`01.Code_IAC_Selfhosted-Runner-and-Trivy` and `03.Code_IAC_Terraform_box` ) as below your terraform code
-> 03. [Generate the Github Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
-```sh
-ls 
-\Learning_GitHub_Action\01.Github_Action_DevOps-Project\Terraform_Code_Infra_setup
+      > 01. Make sure First you will create a **`.pem`** key manually from the AWS console. i.e "MYLABKEY.pem" because it will be used for creating `EC2` VMs and `EKS cluster`.
+      > 02. Copy `MYLABKEY.pem` in the terraform directory (`01.Code_IAC_Selfhosted-Runner-and-Trivy` and `03.Code_IAC_Terraform_box` ) as below your terraform code
+      > 03. [Generate the Github Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+         ```sh
+         ls 
+         \Learning_GitHub_Action\01.Github_Action_DevOps-Project\Terraform_Code_Infra_setup
 
 
-Mode                 LastWriteTime         Length Name                                                                                                                                                                                              
-----                 -------------         ------ ----                                                                                                                                                                                              
-dar--l          17/04/25  12:48 PM                .terraform                                                                                                                                                                                         
-dar--l          21/04/25  12:34 PM                00.Code_IAC-github-repo                                                                                                                                                                           
-dar--l          21/04/25  12:34 PM                01.Code_IAC_Selfhosted-Runner-and-Trivy                                                                                                                                                           
-dar--l          21/04/25   1:38 PM                02.Code_IAC_SonarQube                                                                                                                                                                             
-dar--l          21/04/25  12:34 PM                03.Code_IAC_Terraform_box                                                                                                                                                                         
--a---l          20/08/24   1:45 PM            493 .gitignore                                                                                                                                                                                                                                                                                                                                    
--a---l          21/04/25   1:59 PM          18225 AboutThis Project.md                                                                                                                                                                              
--a---l          19/04/25   8:48 PM           1309 main.tf                                                                                  
-```
+         Mode                 LastWriteTime         Length Name                                                                                                                                                                                              
+         ----                 -------------         ------ ----                                                                                                                                                                                              
+         dar--l          17/04/25  12:48 PM                .terraform                                                                                                                                                                                         
+         dar--l          21/04/25  12:34 PM                00.Code_IAC-github-repo                                                                                                                                                                           
+         dar--l          21/04/25  12:34 PM                01.Code_IAC_Selfhosted-Runner-and-Trivy                                                                                                                                                           
+         dar--l          21/04/25   1:38 PM                02.Code_IAC_SonarQube                                                                                                                                                                             
+         dar--l          21/04/25  12:34 PM                03.Code_IAC_Terraform_box                                                                                                                                                                         
+         -a---l          20/08/24   1:45 PM            493 .gitignore                                                                                                                                                                                                                                                                                                                                    
+         -a---l          21/04/25   1:59 PM          18225 AboutThis Project.md                                                                                                                                                                              
+         -a---l          19/04/25   8:48 PM           1309 main.tf                                                                                  
+         ```
 
 - [Clone repository for terraform code](https://github.com/mrbalraj007/Learning_GitHub_Action/tree/main/01.Github_Action_DevOps-Project/Terraform_Code_Infra_setup)<br>
    > 💡 **Note:** Replace GitHub Token, resource names and variables as per your requirement in terraform code
-   > - For **`github Repo`** Token value to be updated in file 
+   - For **`github Repo`** Token value to be updated in file 
       - `00.Code_IAC-github-repo/variables.tf` (i.e default- ```xxxxxx```*)
-   > - **For EC2 VM** 
+   - **For EC2 VM** 
          - `01.Code_IAC_Selfhosted-Runner-and-Trivy/main.tf` (i.e keyname- ```MYLABKEY```*)
          - `03.Code_IAC_Terraform_box/main.tf` (i.e keyname- ```MYLABKEY```*)
-   > - For **Cluster name** 
+   - For **Cluster name** 
          - `03.Code_IAC_Terraform_box/k8s_setup_file/main.tf` (i.e ```balraj```*).
-   > - For **Node Pod**
+   - For **Node Pod**
          - `03.Code_IAC_Terraform_box/k8s_setup_file/variable.tf` (i.e ```MYLABKEY```*)
   
       
 - **Set up your GitHub token**:
    - Create a new GitHub personal access token with the `repo` scope at https://github.com/settings/tokens. 
    - Then set it as an environment variable (DO NOT commit your token to version control):
-   
-   ```bash
-   # For Linux/macOS
-   export GITHUB_TOKEN=your_github_token
-   
-   # For Windows Command Prompt
-   set GITHUB_TOKEN=your_github_token
-   
-   # For Windows PowerShell (I used this one)
-   # $env:GITHUB_TOKEN="your_github_token"
-   $env:TF_VAR_github_token = "your-github-personal-access-token"
-   ```
-- **Test and verify with curl again in powershell terminal:**
-   ```powershell
-   $headers = @{
-    Authorization = "token $env:TF_VAR_github_token"
-   }
-   Invoke-WebRequest -Uri "https://api.github.com/user" -Headers $headers
-   ```
-   - You should see your GitHub user info in JSON, **not** "Bad credentials".
----
+      
+      ```bash
+      # For Linux/macOS
+      export GITHUB_TOKEN=your_github_token
+      
+      # For Windows Command Prompt
+      set GITHUB_TOKEN=your_github_token
+      
+      # For Windows PowerShell (I used this one)
+      # $env:GITHUB_TOKEN="your_github_token"
+      $env:TF_VAR_github_token = "your-github-personal-access-token"
+      ```
+   - **Test and verify with curl again in powershell terminal:**
+      ```powershell
+      $headers = @{
+      Authorization = "token $env:TF_VAR_github_token"
+      }
+      Invoke-WebRequest -Uri "https://api.github.com/user" -Headers $headers
+      ```
+      - You should see your GitHub user info in JSON, **not** "Bad credentials".
+   ---
 
 ## **Key Points**
 1. **GitHub Actions Overview**:
