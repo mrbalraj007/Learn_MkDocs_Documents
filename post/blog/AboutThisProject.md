@@ -1,33 +1,15 @@
-# Required! - Title of your blog
+---
 title: Example article title
-
-# This is a flag with a boolean value
-# Will not publish the blog until it's true
-# Recommended! 
 publish: true
-
-# Recommended? - The description of the blog
-description: This is a demo blog with minimum content 
-
-# Recommended! - Provide the relative imageUrl
+description: This is a demo blog with minimum content
 cover_image: ./assets/logo.png
-
-# Required! - Keywords or hashtags related to your blog
 tags:
   - example
   - article
   - blog
-
-# Optional? - Provide if you have published the blog before
 originalArticleURL: "https://example.com/blog/example-title-blog"
-
-# Optional? - Subtitle for the blog
 subtitle: A simple test article.
-
-# Optional? - Default value is true
 enableTableOfContent: true
-
-# Optional? - Default value is true
 isNewsletterActivated: true
 ---
 
