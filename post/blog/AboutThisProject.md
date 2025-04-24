@@ -1,5 +1,5 @@
 ---
-title: Streamlining AWS Integration with GitHub Actions: A Secure and Scalable Approach Using `OpenID Connect`
+title: "Streamlining AWS Integration with GitHub Actions: A Secure and Scalable Approach Using `OpenID Connect`"
 publish: true
 description: New project for OIDC 
 cover_image: ./assets/image-10.png
