@@ -7,8 +7,8 @@ tags:
   - example
   - article
   - blog
-originalArticleURL: "https://example.com/blog/example-title-blog"
-subtitle: A simple test article.
+# originalArticleURL: "https://example.com/blog/example-title-blog"
+# subtitle: A simple test article.
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
