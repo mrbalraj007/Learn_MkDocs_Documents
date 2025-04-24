@@ -7,8 +7,8 @@ tags:
   - example
   - article
   - blog
-# originalArticleURL: "https://example.com/blog/example-title-blog"
-# subtitle: A simple test article.
+originalArticleURL: "https://example.com/blog/example-title-blog"
+subtitle: This project outlines the step-by-step process of setting up a CI/CD pipeline using GitHub Actions. The project demonstrates how to automate the build, test, and deployment of an application to Kubernetes using tools like Docker, Trivy, SonarQube, and Terraform. The project also highlights the integration of AWS role for managing cloud resources and Kubernetes clusters.
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
@@ -21,8 +21,8 @@ isNewsletterActivated: true
 ![Image](https://github.com/user-attachments/assets/1441af6c-9a1a-4bdd-97bd-1197519455c5)
 ---
 
-## **Project Overview**
-This project outlines the step-by-step process of setting up a CI/CD pipeline using GitHub Actions. The project demonstrates how to automate the build, test, and deployment of an application to Kubernetes using tools like Docker, Trivy, SonarQube, and Terraform. The project also highlights the integration of AWS role for managing cloud resources and Kubernetes clusters.
+<!-- ## **Project Overview**
+This project outlines the step-by-step process of setting up a CI/CD pipeline using GitHub Actions. The project demonstrates how to automate the build, test, and deployment of an application to Kubernetes using tools like Docker, Trivy, SonarQube, and Terraform. The project also highlights the integration of AWS role for managing cloud resources and Kubernetes clusters. -->
 
 ---
 ## <span style="color: Yellow;"> Prerequisites </span>
