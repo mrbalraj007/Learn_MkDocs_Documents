@@ -14,51 +14,21 @@ jobs:
       # This step is required as we need to get file details
       - name: Checkout Repository
         uses: actions/checkout@v2
-      
-      # Debug step to validate markdown file
-      - name: Validate markdown file
-        run: |
-          echo "Checking if file exists:"
-          ls -la ./post/blog/
-          echo "Checking front matter format:"
-          head -n 20 ./post/blog/AboutThisProject.md
-          echo "Checking image paths:"
-          grep -r "!\[" ./post/blog/AboutThisProject.md
-      
-      # Create a debug version with simplified content first
-      - name: Create debug version
-        run: |
-          cat > debug-post.md << 'EOF'
-          ---
-          title: "Test Post"
-          publish: true
-          description: Simple test post
-          tags:
-            - test
-            - debug
-          enableTableOfContent: true
-          isNewsletterActivated: true
-          ---
-          # Test Post
-
-          This is a simple test post to debug the publication process.
-          EOF
-          
-          echo "Debug file created:"
-          cat debug-post.md
-       
-      # The action which publish the blog
+      # - name: Configure Git Credentials
+      #   run: |
+      #     git config user.name github-actions[bot]
+      #     git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+       # The action which publish the blog
       - name: Publish to Hashnode
         # note: using @v2 (current latest version)
         uses: raunakgurud09/hashnode-publish@v2
         id: publish_hashnode
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./debug-post.md"
+          file: "./post/blog/AboutThisProject.md"
           host: "balrajsingh.hashnode.dev"
 
-      # To get additional detail logs about the workflow
+        # To get additional detail logs about the workflow
       - name: Get get output
         run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
-        if: always()
 

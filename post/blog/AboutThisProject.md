@@ -1,16 +1,14 @@
 ---
-title: "Secure AWS and GitHub Actions Integration with OIDC"
+title:  "Streamlining AWS Integration with GitHub Actions: A Secure and Scalable Approach Using OpenID Connect"
 publish: true
-description: New project for OIDC 
-cover_image: https://raw.githubusercontent.com/mrbalraj007/Learn_MkDocs_Documents/main/post/blog/All_ScreenShot/image-10.png
+description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
+cover_image: ./assets/image-10.png
 tags:
-  - OIDC
-  - GitHub Actions with AWS
-  - GitHub Actions
-  - OIDC Integration
-  - AWS Integration
-  - Security
-  - DevOps
+  - example
+  - article
+  - blog
+# originalArticleURL: "https://example.com/blog/example-title-blog"
+# subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
@@ -19,15 +17,13 @@ isNewsletterActivated: true
 - Kubernetes Made Easy: Terraform-Powered EKS Provisioning with GitHub Actions CI/CD
 - Technical Project project: GitHub Actions CI/CD Pipeline with Live Project
 # https://github.com/user-attachments/assets/b93fa528-6778-4c97-94ee-6e36c7f4fa8e
- -->
+
+![Image](https://github.com/user-attachments/assets/1441af6c-9a1a-4bdd-97bd-1197519455c5)
 ---
-<!-- # GitHub-Action-OIDCConnect
-This repository share some best practices on GitHub Actions for AWS CICD tasks.
-1. AWS OIDC Connection based GitHub Actions 
- -->
+
 
 # Streamlining AWS Integration with GitHub Actions: A Secure and Scalable Approach Using `OpenID Connect`
-
+ -->
 ![alt text](https://raw.githubusercontent.com/mrbalraj007/Learn_MkDocs_Documents/main/post/blog/All_ScreenShot/image-10.png)
 
 ## <span style="color: Yellow;"> Objective
