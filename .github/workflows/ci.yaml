@@ -14,7 +14,10 @@ jobs:
       # This step is required as we need to get file details
       - name: Checkout Repository
         uses: actions/checkout@v2
-
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
        # The action which publish the blog
       - name: Publish to Hashnode
         # note: using @v2 (current latest version)
