@@ -26,7 +26,7 @@ jobs:
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
           file: "./post/blog/AboutThisProject.md"
-          host: "balrajsingh-dev.hashnode.dev"
+          host: "balrajsingh.hashnode.dev"
 
         # To get additional detail logs about the workflow
       - name: Get get output
