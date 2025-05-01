@@ -1,12 +1,19 @@
 ---
-title:  "Mega Project Spotlight: Full-Stack DevSecOps Pipeline for EKS with GitHub Actions & Terraform"
+title:  "Testing"
 publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- 
 cover_image: ./assets/image-10.png
 tags:
-  - example
-  - article
-  - blog
+  - Docker
+  - Kubernetes
+  - AWS
+  - Prometheus
+  - Grafana
+  - SonarQube
+  - Trivy
+  - Helm
+  - ArgoCD
+  
 # originalArticleURL: "https://example.com/blog/example-title-blog"
 # subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
 enableTableOfContent: true
