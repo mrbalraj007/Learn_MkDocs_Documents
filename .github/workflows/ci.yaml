@@ -2,6 +2,11 @@ name: "Publish"
 
 on:
   workflow_dispatch:
+    inputs:
+      post_file:
+        description: 'Path to the markdown file to publish'
+        required: true
+        default: './post/blog/test-post.md'
   push:
     branches: ["main"]
   pull_request:
@@ -11,24 +16,97 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      # This step is required as we need to get file details
+      # Use the latest version of the checkout action
       - name: Checkout Repository
-        uses: actions/checkout@v2
-      # - name: Configure Git Credentials
-      #   run: |
-      #     git config user.name github-actions[bot]
-      #     git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-       # The action which publish the blog
-      - name: Publish to Hashnode
-        # note: using @v2 (current latest version)
-        uses: raunakgurud09/hashnode-publish@v2
-        id: publish_hashnode
+        uses: actions/checkout@v3
         with:
-          hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./post/blog/AboutThisProject.md"
-          host: "balrajsingh.hashnode.dev"
-
-        # To get additional detail logs about the workflow
-      - name: Get get output
-        run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+          fetch-depth: 1
+          
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Create Scripts Directory
+        run: |
+          mkdir -p scripts
+          
+      - name: Validate Markdown File
+        run: |
+          echo "Validating markdown file structure..."
+          POST_FILE="${{ github.event.inputs.post_file || './post/blog/test-post.md' }}"
+          
+          if [ -f "$POST_FILE" ]; then
+            echo "Markdown file exists, checking frontmatter..."
+            head -20 "$POST_FILE"
+          else
+            echo "::error::Markdown file not found at $POST_FILE"
+            exit 1
+          fi
+      
+      # Try directly with curl approach, fixing the GraphQL format
+      - name: Publish to Hashnode (Direct API)
+        id: publish_direct
+        run: |
+          POST_FILE="${{ github.event.inputs.post_file || './post/blog/test-post.md' }}"
+          TITLE=$(grep -m 1 "title:" "$POST_FILE" | sed 's/title: *//' | sed 's/"//g' | sed "s/'//g")
+          CONTENT=$(sed '1,/---/d' "$POST_FILE" | sed '1,/---/d')
+          
+          echo "Publishing '$TITLE' to Hashnode..."
+          
+          # Escape newlines and quotes for JSON
+          CONTENT_ESCAPED=$(echo "$CONTENT" | sed 's/"/\\"/g' | awk '{printf "%s\\n", $0}')
+          
+          # Create JSON payload for the GraphQL mutation
+          cat > payload.json << EOF
+          {
+            "query": "mutation PublishPost(\$input: PublishPostInput!) { publishPost(input: \$input) { post { slug title } } }",
+            "variables": {
+              "input": {
+                "title": "$TITLE",
+                "contentMarkdown": "$CONTENT_ESCAPED",
+                "tags": []
+              }
+            }
+          }
+          EOF
+          
+          # Send request to Hashnode API
+          curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: ${{ secrets.HASHNODE_KEY }}" \
+            -d @payload.json \
+            https://gql.hashnode.com > response.json
+          
+          if grep -q "errors" response.json; then
+            echo "Error publishing to Hashnode:"
+            cat response.json
+            exit 1
+          else
+            echo "Successfully published to Hashnode!"
+            cat response.json
+          fi
+        continue-on-error: true
+        
+      - name: Check Publishing Result
+        run: |
+          if [[ "${{ steps.publish_direct.outcome }}" == "success" ]]; then
+            echo "✅ Successfully published to Hashnode!"
+            cat response.json
+          else
+            echo "::warning::Failed to publish to Hashnode. Check logs for details."
+            echo "If the issue persists, try publishing manually or contact Hashnode support."
+            
+            # Try to get more debugging information from the API
+            curl -s -X POST \
+              -H "Content-Type: application/json" \
+              -H "Authorization: ${{ secrets.HASHNODE_KEY }}" \
+              -d '{"query": "query { me { username } }"}' \
+              https://gql.hashnode.com
+          fi
 

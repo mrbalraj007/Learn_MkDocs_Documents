@@ -1,18 +1,18 @@
 ---
 title:  "AWS cost optimization through automated monitoring and reporting with Slack integration"
 publish: true
-description: TESTING DOCUMENT USING GITHUB PAGES- 
+description: AWS cost optimization through automated monitoring and reporting with Slack integration
 cover_image: ./assets/image-10.png
 tags:
-  - example
-  - article
-  - blog
-# originalArticleURL: "https://example.com/blog/example-title-blog"
-# subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
+   - AWSCLI
+   - awscost
+   - saving
+   - cloud-optimization
+canonicalUrl: ""
+hideFromHashnodeCommunity: false
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
-
 
 ## Executive Summary
 This document outlines a solution for AWS cost optimization through automated monitoring and reporting. By implementing this solution, organizations can gain regular insights into their AWS spending patterns, identify cost spikes, and take appropriate actions to optimize cloud expenses.
@@ -229,5 +229,8 @@ The combination of AWS Cost CLA, Slack integration, and scheduled reporting crea
 - [Download NodeJs](https://nodejs.org/en/download)
 - [Repo Link](https://github.com/kamranahmedse/aws-cost-cli?tab=readme-ov-file)
 - [My Repo](https://github.com/mrbalraj007/aws-cost-cli)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5929ef5b998391a1c4062bf2cbef4eaa3534fee2
 
