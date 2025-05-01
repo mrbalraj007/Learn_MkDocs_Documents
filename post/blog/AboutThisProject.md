@@ -182,9 +182,10 @@ dar--l          21/04/25  12:34 PM                03.Code_IAC_Terraform_box
 -a---l          21/04/25   1:59 PM          18225 AboutThis Project.md                                                                                                                                                                              
 -a---l          19/04/25   8:48 PM           1309 main.tf # <---(This one need to run)
 
-````
+```
 
 [Clone repository for terraform code](https://github.com/mrbalraj007/Learning_GitHub_Action/tree/main/02.Github_Action_DevOps-Project/Terraform_Code_Infra_setup)<br>
+
   > 💡 **Note:** Replace GitHub Token, resource names and variables as per your requirement in terraform code
   > - For **`github Repo`** Token value to be updated in file 
       - `00.Code_IAC-github-repo/variables.tf` (i.e default- `xxxxxx`*)
@@ -289,7 +290,7 @@ drwxr-xr-x 1 bsingh 1049089     0 Apr 21 12:34  03.Code_IAC_Terraform_box/
 -rw-r--r-- 1 bsingh 1049089 21284 Apr 21 14:44 'AboutThis Project.md'
 -rw-r--r-- 1 bsingh 1049089  1309 Apr 19 20:48  main.tf # <---This need to be run>
 ```
-You need to run ```main.tf``` file using following terraform command.
+You need to run `main.tf` file using following terraform command.
 
 Now, run the following command.
 ```bash
@@ -394,12 +395,12 @@ To see help text, you can run:
    ![alt text](All_ScreenShot/image-3.png)
 
 > > ⚠️ **Important:** <br>
-*The ```aws eks update-kubeconfig``` command is used to configure your local kubectl tool to interact with an Amazon EKS (Elastic Kubernetes Service) cluster. It updates or creates a kubeconfig file that contains the necessary authentication information to allow kubectl to communicate with your specified EKS cluster.*
+*The `aws eks update-kubeconfig` command is used to configure your local kubectl tool to interact with an Amazon EKS (Elastic Kubernetes Service) cluster. It updates or creates a kubeconfig file that contains the necessary authentication information to allow kubectl to communicate with your specified EKS cluster.*
 
 > > <span style="color: Orange;"> **What happens when you run this command**:</span><br>
-The AWS CLI retrieves the required connection information for the EKS cluster (such as the API server endpoint and certificate) and updates the kubeconfig file located at ```~/.kube/config (by default)```.
+The AWS CLI retrieves the required connection information for the EKS cluster (such as the API server endpoint and certificate) and updates the kubeconfig file located at `~/.kube/config (by default)`.
 It configures the authentication details needed to connect kubectl to your EKS cluster using IAM roles.
-After running this command, you will be able to interact with your EKS cluster using kubectl commands, such as ```kubectl get nodes``` or ```kubectl get pods```.
+After running this command, you will be able to interact with your EKS cluster using kubectl commands, such as `kubectl get nodes` or `kubectl get pods`.
 
    ```sh
    kubectl get nodes
@@ -646,7 +647,7 @@ Once you access the ArgoCD URL and create an application
 ![alt text](All_ScreenShot/image-44.png)
 ![alt text](All_ScreenShot/image-45.png)
 
-- Try to change something in ```deployment.yml``` (i.e Replica to `2` from 5))
+- Try to change something in `deployment.yml` (i.e Replica to `2` from 5))
 
 ![alt text](All_ScreenShot/image-47.png)
 
@@ -768,7 +769,7 @@ The workflow will run:
 
 ### Customization in Slack webhook
 
-You can customize the notification message by modifying the `custom_payload` in the `.github/workflows/hello-world-slack.yml` file.
+You can customize the notification message by modifying the `custom_payload` in the `.github/workflows/slack.yml` file.
 
 
 The `SLACK_WEBHOOK_URL` in your workflow file refers to a webhook URL that needs to be stored as a GitHub Actions secret. This is not an actual URL in the file, but a reference to a secret value.
@@ -815,7 +816,7 @@ To set up a Slack webhook URL:
 
     - Here is the complete [CICD- Pipeline to destroy Deployment and Services](https://github.com/mrbalraj007/Learning_GitHub_Action/tree/main/02.Github_Action_DevOps-Project/Working_PipeLine)
 
-### <span style="color: cyan;"> To delete ```AWS EKS cluster```
+### <span style="color: cyan;"> To delete `AWS EKS cluster`
    -   Login into the `Terraform EC2 `instance and change the directory to /`k8s_setup_file`, and run the following command to delete the cluster.
        - ```sh
          sudo su - ubuntu
@@ -844,7 +845,7 @@ To set up a Slack webhook URL:
 - Rerun the destroy command and this time it works :-)
 
 
-###  <span style="color: cyan;"> To delete the ```Virtual machine```.
+###  <span style="color: cyan;"> To delete the `Virtual machine`.
 Go to folder *<span style="color: cyan;">"02.Github_Action_DevOps-Project/Terraform_Code_Infra_setup"</span>* and run the terraform command.
    - `00.Code_IAC-github-repo`
    - `01.Code_IAC_Selfhosted-Runner-and-Trivy`
