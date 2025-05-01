@@ -218,7 +218,6 @@ dar--l          21/04/25  12:34 PM                03.Code_IAC_Terraform_box
    Invoke-WebRequest -Uri "https://api.github.com/user" -Headers $headers
    ```
    - You should see your GitHub user info in JSON, **not** "Bad credentials".
----
 <!-- 
 ## **Key Points**
 1. **GitHub Actions Overview**:
@@ -246,7 +245,6 @@ dar--l          21/04/25  12:34 PM                03.Code_IAC_Terraform_box
    - Insights into managing AWS resources with AWS CLI. -->
 
 ---
-
 ## **Step-by-Step Process**
 
 ### <span style="color: Yellow;">Setting Up the Infrastructure </span>
