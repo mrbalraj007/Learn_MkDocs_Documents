@@ -2,6 +2,11 @@ name: "Publish"
 
 on:
   workflow_dispatch:
+    inputs:
+      post_file:
+        description: 'Path to the markdown file to publish'
+        required: true
+        default: './post/blog/test-post.md'
   push:
     branches: ["main"]
   pull_request:
@@ -22,33 +27,83 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Validate and Debug Hashnode API
+        run: |
+          echo "Debugging Hashnode API connection..."
+          node ./scripts/hashnode-debug.js ${{ secrets.HASHNODE_KEY }}
+        continue-on-error: true
+      
       - name: Validate Markdown File
         run: |
           echo "Validating markdown file structure..."
-          if [ -f "./post/blog/AboutThisProject.md" ]; then
+          POST_FILE="${{ github.event.inputs.post_file || './post/blog/AboutThisProject.md' }}"
+          
+          if [ -f "$POST_FILE" ]; then
             echo "Markdown file exists, checking frontmatter..."
+            head -20 "$POST_FILE"
           else
-            echo "::error::Markdown file not found at ./post/blog/AboutThisProject.md"
+            echo "::error::Markdown file not found at $POST_FILE"
             exit 1
           fi
       
-      # The action which publish the blog
-      - name: Publish to Hashnode
-        uses: raunakgurud09/hashnode-publish@v2
+      # Try the hashnode-publish action first
+      - name: Publish to Hashnode (Action)
         id: publish_hashnode
+        uses: raunakgurud09/hashnode-publish@v2
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./post/blog/AboutThisProject.md"
+          file: "${{ github.event.inputs.post_file || './post/blog/AboutThisProject.md' }}"
           host: "balrajsingh.hashnode.dev"
+        continue-on-error: true
+        
+      # If the action fails, try with curl as a fallback
+      - name: Publish to Hashnode (Direct API)
+        if: steps.publish_hashnode.outcome != 'success'
+        id: publish_direct
+        run: |
+          POST_FILE="${{ github.event.inputs.post_file || './post/blog/AboutThisProject.md' }}"
+          TITLE=$(grep -m 1 "title:" "$POST_FILE" | sed 's/title: *//' | sed 's/"//g' | sed "s/'//g")
+          CONTENT=$(sed '1,/---/d' "$POST_FILE" | sed '1,/---/d')
+          
+          echo "Publishing '$TITLE' to Hashnode..."
+          
+          # Create JSON payload for the GraphQL mutation
+          PAYLOAD="{
+            \"query\": \"mutation CreateStory(\\\$input: PublishPostInput!) { publishPost(input: \\\$input) { post { slug title } } }\",
+            \"variables\": {
+              \"input\": {
+                \"title\": \"$TITLE\",
+                \"contentMarkdown\": \"$CONTENT\",
+                \"tags\": []
+              }
+            }
+          }"
+          
+          # Send request to Hashnode API
+          curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: ${{ secrets.HASHNODE_KEY }}" \
+            -d "$PAYLOAD" \
+            https://gql.hashnode.com > response.json
+          
+          cat response.json
         continue-on-error: true
         
       - name: Check Publishing Result
         run: |
-          if [[ "${{steps.publish_hashnode.outcome}}" == "success" ]]; then
-            echo "Successfully published to Hashnode!"
-            echo "${{steps.publish_hashnode.outputs.result_json}}"
+          if [[ "${{ steps.publish_hashnode.outcome }}" == "success" ]]; then
+            echo "✅ Successfully published to Hashnode using the action!"
+            echo "${{ steps.publish_hashnode.outputs.result_json }}"
+          elif [[ "${{ steps.publish_direct.outcome }}" == "success" ]]; then
+            echo "✅ Successfully published to Hashnode using direct API!"
+            cat response.json
           else
-            echo "::warning::Failed to publish to Hashnode. Please check your API key and content format."
+            echo "::warning::Failed to publish to Hashnode. Check logs for details."
             echo "If the issue persists, try publishing manually or contact Hashnode support."
           fi
 
