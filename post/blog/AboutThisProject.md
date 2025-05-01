@@ -1,15 +1,14 @@
 ---
-title:  "AWS cost optimization through automated monitoring and reporting with Slack integration"
+title: My New Project on K8 Document and Terraform
 publish: true
-description: AWS cost optimization through automated monitoring and reporting with Slack integration
-cover_image: ./assets/image-10.png
+description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
+cover_image: ./assets/mainproject.png
 tags:
-   - AWSCLI
-   - awscost
-   - saving
-   - cloud-optimization
-canonicalUrl: ""
-hideFromHashnodeCommunity: false
+  - example
+  - article
+  - blog
+# originalArticleURL: "https://example.com/blog/example-title-blog"
+# subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
