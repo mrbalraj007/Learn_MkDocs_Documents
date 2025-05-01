@@ -4,9 +4,13 @@ publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- 
 cover_image: ./assets/image-10.png
 tags:
-   - example
-  - article
-  - blog
+   - AWSCLI
+   - article
+   - blog
+   - awscost
+   - saving
+   - budget
+
 # originalArticleURL: "https://example.com/blog/example-title-blog"
 # subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
 enableTableOfContent: true
