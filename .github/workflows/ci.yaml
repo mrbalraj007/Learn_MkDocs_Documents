@@ -18,10 +18,36 @@ jobs:
       # Debug step to validate markdown file
       - name: Validate markdown file
         run: |
-          echo "Checking if test file exists:"
-          ls -la ./post/blog/
-          echo "Checking test file content:"
-          cat ./post/blog/test-post.md
+          echo "Creating ultra-minimal test file"
+          cat > ./post/blog/simple-post.md << 'EOF'
+          ---
+          title: "Test Post"
+          publish: true
+          description: Simple test
+          tags:
+            - test
+          enableTableOfContent: false
+          isNewsletterActivated: false
+          ---
+
+          # Hello Hashnode
+
+          This is a minimal test post.
+          EOF
+          
+          echo "Simple post content:"
+          cat ./post/blog/simple-post.md
+      
+      # Try to capture error details
+      - name: Debug HASHNODE_KEY
+        run: |
+          if [ -n "${{ secrets.HASHNODE_KEY }}" ]; then
+            echo "HASHNODE_KEY is set (displaying first 4 chars): ${HASHNODE_KEY:0:4}..."
+          else
+            echo "HASHNODE_KEY is not set or empty"
+          fi
+        env:
+          HASHNODE_KEY: ${{ secrets.HASHNODE_KEY }}
        
       # The action which publish the blog
       - name: Publish to Hashnode
@@ -30,11 +56,15 @@ jobs:
         id: publish_hashnode
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./post/blog/test-post.md"
+          file: "./post/blog/simple-post.md"
           host: "balrajsingh.hashnode.dev"
-
-      # To get additional detail logs about the workflow
-      - name: Get get output
-        run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+        continue-on-error: true
+      
+      # Get detailed error info
+      - name: Get detailed output
+        run: |
+          echo "Result JSON: ${{steps.publish_hashnode.outputs.result_json}}"
+          echo "Summary: ${{steps.publish_hashnode.outputs.result_summary}}"
+          echo "Outcome: ${{steps.publish_hashnode.outcome}}"
         if: always()
 
