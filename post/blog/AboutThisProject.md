@@ -1,8 +1,8 @@
 ---
-title: My New Project on K8 Document and Terraform
+title: AWS cost optimization through automated monitoring and reporting with Slack integration
 publish: true
 description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content
-cover_image: ./assets/mainproject.png
+cover_image: ./assets/image-10.png
 tags:
   - example
   - article
