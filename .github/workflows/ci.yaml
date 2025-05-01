@@ -14,21 +14,27 @@ jobs:
       # This step is required as we need to get file details
       - name: Checkout Repository
         uses: actions/checkout@v2
-      # - name: Configure Git Credentials
-      #   run: |
-      #     git config user.name github-actions[bot]
-      #     git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-       # The action which publish the blog
+      
+      # Debug step to validate markdown file
+      - name: Validate markdown file
+        run: |
+          echo "Checking if test file exists:"
+          ls -la ./post/blog/
+          echo "Checking test file content:"
+          cat ./post/blog/test-post.md
+       
+      # The action which publish the blog
       - name: Publish to Hashnode
         # note: using @v2 (current latest version)
         uses: raunakgurud09/hashnode-publish@v2
         id: publish_hashnode
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./post/blog/AboutThisProject.md"
+          file: "./post/blog/test-post.md"
           host: "balrajsingh.hashnode.dev"
 
-        # To get additional detail logs about the workflow
+      # To get additional detail logs about the workflow
       - name: Get get output
         run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+        if: always()
 
