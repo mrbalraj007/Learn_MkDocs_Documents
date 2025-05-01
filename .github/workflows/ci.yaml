@@ -14,21 +14,92 @@ jobs:
       # This step is required as we need to get file details
       - name: Checkout Repository
         uses: actions/checkout@v2
-      # - name: Configure Git Credentials
-      #   run: |
-      #     git config user.name github-actions[bot]
-      #     git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-       # The action which publish the blog
-      - name: Publish to Hashnode
-        # note: using @v2 (current latest version)
+      
+      # Debug step to validate markdown file
+      - name: Create test file and verify Hashnode publication details
+        run: |
+          echo "Creating test file with matching settings"
+          cat > ./post/blog/direct-test.md << 'EOF'
+          ---
+          title: "Simple Test Post"
+          publish: true
+          description: Testing Hashnode API
+          tags:
+            - test
+          enableTableOfContent: true
+          isNewsletterActivated: true
+          ---
+
+          # Testing Hashnode API
+
+          This is a basic test post to verify the API connection.
+          EOF
+          
+          echo "Test file content:"
+          cat ./post/blog/direct-test.md
+          
+          # Try to get info about the publication ID
+          echo "Attempting to verify publication ID with curl"
+          FIRST_FOUR="${HASHNODE_KEY:0:4}"
+          echo "Using API key starting with: $FIRST_FOUR..."
+          
+          # Use curl to test API access (without exposing full token)
+          curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: $HASHNODE_KEY" \
+            -H "Content-Type: application/json" \
+            "https://api.hashnode.com/" || echo "Failed to contact API"
+        env:
+          HASHNODE_KEY: ${{ secrets.HASHNODE_KEY }}
+      
+      # The action which publish the blog with curl directly
+      - name: Publish directly with curl
+        run: |
+          echo "Attempting direct API post with curl"
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: $HASHNODE_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation PublishPost($input: PublishPostInput!){ publishPost(input: $input) { post { id slug title url } } }",
+              "variables": {
+                "input": {
+                  "title": "API Test Post",
+                  "contentMarkdown": "# Direct API Test\n\nTesting API access directly with curl.",
+                  "tags": [{"slug": "test", "name": "test"}],
+                  "coverImageOptions": {"coverImageURL": ""}
+                }
+              }
+            }' \
+            https://gql.hashnode.com)
+          
+          echo "Response from direct API call: $RESPONSE"
+          
+          # Extract error message if present
+          ERROR=$(echo $RESPONSE | grep -o '"errors":\[.*\]' || echo "No error details found")
+          echo "Error details: $ERROR"
+        env:
+          HASHNODE_KEY: ${{ secrets.HASHNODE_KEY }}
+          
+      # Try the original action as fallback with our new file
+      - name: Publish to Hashnode (fallback)
         uses: raunakgurud09/hashnode-publish@v2
         id: publish_hashnode
         with:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}
-          file: "./post/blog/AboutThisProject.md"
+          file: "./post/blog/direct-test.md"
           host: "balrajsingh.hashnode.dev"
-
-        # To get additional detail logs about the workflow
-      - name: Get get output
-        run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+        continue-on-error: true
+      
+      # Detailed output
+      - name: Get detailed output
+        if: always()
+        run: |
+          echo "Result JSON: ${{steps.publish_hashnode.outputs.result_json || 'No JSON result'}}"
+          echo "Summary: ${{steps.publish_hashnode.outputs.result_summary || 'No summary available'}}"
+          echo "Outcome: ${{steps.publish_hashnode.outcome || 'unknown'}}"
+          
+          echo "IMPORTANT: Please verify the following:"
+          echo "1. Your Hashnode API token has correct permissions"
+          echo "2. Your publication ID is correct in the host parameter"
+          echo "3. The domain 'balrajsingh.hashnode.dev' exists and is accessible"
+          echo "4. Your token has access to this publication"
 
