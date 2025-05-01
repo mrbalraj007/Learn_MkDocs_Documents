@@ -13,6 +13,7 @@ enableTableOfContent: true
 isNewsletterActivated: true
 ---
 
+
 ## Executive Summary
 This document outlines a solution for AWS cost optimization through automated monitoring and reporting. By implementing this solution, organizations can gain regular insights into their AWS spending patterns, identify cost spikes, and take appropriate actions to optimize cloud expenses.
 
