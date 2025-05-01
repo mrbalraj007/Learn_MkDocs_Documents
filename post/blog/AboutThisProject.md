@@ -1,17 +1,15 @@
 ---
-title:  "AWS Cost Optimization with Automated Monitoring and Reporting"
+title: "AWS Cost Optimization with Automated Monitoring and Reporting"
 publish: true
-description: TESTING DOCUMENT USING GITHUB PAGES- 
+description: AWS cost optimization through automated monitoring and reporting with Slack integration
 cover_image: ./assets/image-10.png
 tags:
    - AWSCLI
-   - blog
    - awscost
-
-   
-
-# originalArticleURL: "https://example.com/blog/example-title-blog"
-# subtitle: Demo- TESTING DOCUMENT USING GITHUB PAGES
+   - saving
+   - cloud-optimization
+canonicalUrl: ""
+hideFromHashnodeCommunity: false
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
