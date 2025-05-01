@@ -44,7 +44,7 @@ Before diving into this project, here are some skills and tools you should be fa
 - A GitHub personal access token with the necessary permissions to create repositories.
 
 
-[Clone repository for terraform code](https://github.com/mrbalraj007/Learning_GitHub_Action/tree/main/02.Github_Action_DevOps-Project/Terraform_Code_Infra_setup)<br>
+[Clone repository for terraform code](https://github.com/mrbalraj007/Learning_GitHub_Action/tree/main/03.GitHub_Action_AWS_COST_CLI_Optimization)<br>
 
   > 💡 **Note:** Replace resource names and variables as per your requirement in terraform code
     > - **For EC2 VM**:  change in terraform.tfvars` (i.e keyname- `MYLABKEY`*)
@@ -156,7 +156,8 @@ Invite the Bot in Slack Channel
    ![alt text](All_ScreenShot/image-20.png)
 
 
-- Create Python Script (upload_cost_report.py): from slack_sdk 
+- Create Python Script (upload_cost_report.py): from slack_sdk
+ 
    ```py title="upload_cost_report.py" linenums="1" hl_lines="2-4"""
    from slack_sdk import WebClient 
    from slack_sdk.errors import SlackApiError
@@ -176,6 +177,7 @@ Invite the Bot in Slack Channel
    print(f"Error uploading file: {e.response['error']}")
    ```
 -  Run the AWS Cost CLI + Python Script:
+
 #### 5.  Generate cost report
        run the following command- 
        aws-cost --text > cost-report.txt
@@ -228,8 +230,3 @@ The combination of AWS Cost CLA, Slack integration, and scheduled reporting crea
 - [Download NodeJs](https://nodejs.org/en/download)
 - [Repo Link](https://github.com/kamranahmedse/aws-cost-cli?tab=readme-ov-file)
 - [My Repo](https://github.com/mrbalraj007/aws-cost-cli)
-<<<<<<< HEAD
-
-=======
->>>>>>> 5929ef5b998391a1c4062bf2cbef4eaa3534fee2
-
