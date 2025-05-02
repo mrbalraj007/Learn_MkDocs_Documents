@@ -12,6 +12,7 @@ tags:
 enableTableOfContent: true
 isNewsletterActivated: true
 ---
+
 ![Image](https://github.com/user-attachments/assets/b6384c05-f779-41a7-851e-4136273fa2b0)
 
 ![Image](https://github.com/user-attachments/assets/666bc33a-aabd-4794-b282-7a169d79c4e5)
