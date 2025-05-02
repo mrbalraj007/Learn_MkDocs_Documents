@@ -28,11 +28,12 @@ jobs:
           # hashnode_key: ${{ secrets.HASHNODE_KEY_DEV }}  # for development (balrajsingh-dev.hashnode.dev)
           
           file: "./post/blog/new_blog.md" # path to the blog file
-          
+
           host: "balrajsingh.hashnode.dev" # for production (balrajsingh.hashnode.dev)
           #host: "balrajsingh-dev.hashnode.dev"  # for development (balrajsingh-dev.hashnode.dev)
 
         # To get additional detail logs about the workflow
       - name: Get get output
         run: echo "${{steps.publish_hashnode.outputs.result_json}} summary ${{steps.publish_hashnode.outputs.result_summary}}"
+
 
