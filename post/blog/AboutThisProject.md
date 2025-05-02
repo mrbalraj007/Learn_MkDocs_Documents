@@ -1,7 +1,7 @@
 ---
 title: "AWS cost optimization through automated monitoring and reporting with Slack integration"
 publish: true
-description: TESTING DOCUMENT USING GITHUB PAGES- This is a demo blog with minimum content.
+description: TESTING DOCUMENT USING GITHUB PAGES- 1.
 cover_image: ./assets/image-11.png
 tags:
   - example
@@ -158,14 +158,13 @@ Invite the Bot in Slack Channel
 
 - Create Python Script (upload_cost_report.py): from slack_sdk
  
-   ```py title="upload_cost_report.py" linenums="1" hl_lines="2-4"""
+   ```sh
    from slack_sdk import WebClient 
    from slack_sdk.errors import SlackApiError
    slack_token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
    client = WebClient(token=slack_token)
 
    try: 
-      # Use files_upload_v2 (latest method) 
       response = client.files_upload_v2( 
          channel="xxxxxxxxxxxxxxxxxxxxxxx", 
          initial_comment="AWS Cost Report",
@@ -175,7 +174,6 @@ Invite the Bot in Slack Channel
 
    except SlackApiError as e: 
    print(f"Error uploading file: {e.response['error']}")
-   
    ```
 -  Run the AWS Cost CLI + Python Script:
 
