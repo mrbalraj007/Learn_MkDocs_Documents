@@ -137,10 +137,10 @@ Invite the Bot in Slack Channel
 
 
 - . Install Python & pip (if not already)
-   ```bash
-   sudo apt update
-   sudo apt install -y python3 python3-pip python3-venv
-   ```
+      ```bash
+      sudo apt update
+      sudo apt install -y python3 python3-pip python3-venv
+      ```
 -  Create a Virtual Environment (Optional but Recommended)
    ```bash
    python3 -m venv venv
@@ -175,6 +175,7 @@ Invite the Bot in Slack Channel
 
    except SlackApiError as e: 
    print(f"Error uploading file: {e.response['error']}")
+   
    ```
 -  Run the AWS Cost CLI + Python Script:
 
