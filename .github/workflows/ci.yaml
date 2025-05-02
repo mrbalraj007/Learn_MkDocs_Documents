@@ -27,7 +27,8 @@ jobs:
           hashnode_key: ${{ secrets.HASHNODE_KEY }}  # for production (balrajsingh.hashnode.dev)
           # hashnode_key: ${{ secrets.HASHNODE_KEY_DEV }}  # for development (balrajsingh-dev.hashnode.dev)
           
-          file: "./post/blog/AboutThisProject.md"
+          file: "./post/blog/new_blog.md" # path to the blog file
+          
           host: "balrajsingh.hashnode.dev" # for production (balrajsingh.hashnode.dev)
           #host: "balrajsingh-dev.hashnode.dev"  # for development (balrajsingh-dev.hashnode.dev)
 
