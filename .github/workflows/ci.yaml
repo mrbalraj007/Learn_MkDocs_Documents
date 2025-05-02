@@ -24,9 +24,12 @@ jobs:
         uses: raunakgurud09/hashnode-publish@v2
         id: publish_hashnode
         with:
-          hashnode_key: ${{ secrets.HASHNODE_KEY }}
+          # hashnode_key: ${{ secrets.HASHNODE_KEY }}  # for production (balrajsingh.hashnode.dev)
+          # hashnode_key: ${{ secrets.HASHNODE_KEY_DEV }}  # for development (balrajsingh-dev.hashnode.dev)
+          hashnode_key: ${{ secrets.HASHNODE_KEY_DEV }}
           file: "./post/blog/AboutThisProject.md"
-          host: "balrajsingh.hashnode.dev"
+          #host: "balrajsingh.hashnode.dev" # for production (balrajsingh.hashnode.dev)
+          host: "balrajsingh-dev.hashnode.dev"  # for development (balrajsingh-dev.hashnode.dev)
 
         # To get additional detail logs about the workflow
       - name: Get get output
